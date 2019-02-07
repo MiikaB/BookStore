@@ -1,5 +1,8 @@
 package com.example.BookStore;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +24,13 @@ public class BookStoreApplication {
 	@Bean
 	public CommandLineRunner demo(BookRepository repository) {
 		return (args) -> {
-			Book book = new Book("Hobitti","Homppeli", 1995 ,"dsfjhrwe", 9000);
+			ArrayList<Book> books = new ArrayList<Book>();
+			Book book = new Book();
+			book.setAuthor("George Orwell");
+			book.setTitle("Animal Farm");
+			book.setIsbn("2212343-5");
+			book.setYear(1945);
+			book.setPrice(29);
 			repository.save(book);
 		};
 	}

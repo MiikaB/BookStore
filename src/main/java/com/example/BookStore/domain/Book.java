@@ -10,19 +10,23 @@ import org.springframework.data.repository.CrudRepository;
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	public long id;
+	public String title;
+	public String author;
+	public int year;
+	public String isbn;
+	public double price;
 	
-	private String title;
-	private String author;
-	private int year;
-	private String isbn;
-	private double price;
+	public Book() {
+		
+	}
 	
-	public Book(String author, String title, int year, String isbn, double price) {
+	public Book(String author, String title, int year, String isbn, double price, long id) {
+		this.id = id;
 		this.author = author;
-		this.year = year;
 		this.title = title;
 		this.isbn = isbn;
+		this.year = year;
 		this.price = price;
 	}
 	public String getTitle() {
@@ -30,6 +34,12 @@ public class Book {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	public String getAuthor() {
 		return author;
