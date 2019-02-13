@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.springframework.data.repository.CrudRepository;
 
 @Entity
@@ -17,18 +20,30 @@ public class Book {
 	public String isbn;
 	public double price;
 	
-	public Book() {
+	@ManyToOne
+	@JoinColumn(name="categoryid")
+	public Category category;
 		
-	}
+	public Book() {}
 	
-	public Book(String author, String title, int year, String isbn, double price, long id) {
-		this.id = id;
+	public Book(String author, String title, int year, String isbn, double price, Category category) {
+		super();
 		this.author = author;
 		this.title = title;
 		this.isbn = isbn;
 		this.year = year;
 		this.price = price;
+		this.category = category;
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -67,6 +82,9 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return "Title: " + title + "Author: " + author + "Year" + year + "Isbn: " + isbn + "Price: " + price;
+		if (this.category != null)
+		return this.getCategory() + "]";
+		else
+			return title;
 	}	
 }
