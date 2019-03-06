@@ -3,6 +3,7 @@ package com.example.BookStore.web;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,14 @@ public class BookController {
 	private CategoryRepository crepository;
 	
 	@RequestMapping(value="/booklist", method=RequestMethod.GET)
-
 	public String bookList(Model model) {
 		model.addAttribute("books", repository.findAll());
 		return "booklist";
 	}
+    @RequestMapping(value="/login")
+    public String login() {	
+        return "login";
+    }
 	@RequestMapping(value = "/addbook")
 	public String addBook(Model model){
 	model.addAttribute("book", new Book());
@@ -39,6 +43,7 @@ public class BookController {
 	return "redirect:booklist";
 	}
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public String deletebook(@PathVariable("id") Long BookId, Model model) {
 	repository.deleteById(BookId);
 	return "redirect:../booklist";
